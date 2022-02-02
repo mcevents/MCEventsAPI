@@ -1,0 +1,11 @@
+# Packages
+node_modules/
+package_lock.json
+
+# Logs
+logs/
+*.log
+
+# Configuration
+.env
+config.js
