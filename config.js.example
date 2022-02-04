@@ -9,5 +9,13 @@ module.exports = {
   tables: {
     minigames: "Minigames"
   },
-  debug: false
+  debug: false,
+  blacklist: {
+    proxy: {
+      message: "Example message",
+      ips: [
+        "127.0.0.1"
+      ]
+    }
+  }
 }

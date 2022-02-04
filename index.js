@@ -61,6 +61,17 @@ app.use(
 
 app.get("/", (req,res) => res.redirect(req.baseUrl + "/v1/docs"));
 
+app.use((req, res, next) => {
+  // TODO: Look into optimization.
+  const ip = Functions.getClientIP(req);
+  for (let key of Object.keys(config.blacklist)) {
+    if (config.blacklist[key].ips.indexOf(ip) !== -1) {
+      return res.send(config.blacklist[key].message);
+    }
+  }
+  next();
+});
+
 app.use(rateLimit({
   windowMs: 15 * 6000, // 15 minutes
   max: 100, // 100 per windowMs

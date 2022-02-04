@@ -9,3 +9,6 @@ logs/
 # Configuration
 .env
 config.js
+
+# Misc
+.idea

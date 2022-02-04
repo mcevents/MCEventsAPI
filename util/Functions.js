@@ -1,6 +1,12 @@
 const MojangAPI = require('mojang-api');
 
 module.exports = {
+  getClientIP(req) {
+    let ip = req.connection.remoteAddress;
+    if (!ip) return '';
+    if (ip.substring(0,7) === "::ffff:") ip = ip.substring(7);
+    return ip;
+  },
   renameKeys(object,remove) {
     Object.keys(object).map((key) => {
       object[key.replace(remove,"")] = object[key];
