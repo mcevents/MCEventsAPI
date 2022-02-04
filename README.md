@@ -10,7 +10,7 @@ You can make your own by doing the following SQL commands:
 
 ```sql
 CREATE TABLE Minigames (UUID varchar(36), XPDATA mediumtext, WINS mediumtext, KILLS mediumtext, PLAYED mediumtext);
-INSERT INTO Minigames VALUES ("069a79f4-44e9-4726-a5be-fca90e38aaf5", "{\"level\":0, \"amount\": 0}", "{\"gameWins\":0}", "{\"gameKills\":0}", "{\"gameGames\":0}");
+INSERT INTO Minigames VALUES ("d2c95f31-40cb-4035-b13c-fc7e00aa8940", "{\"level\":0, \"amount\": 0}", "{\"gameWins\":0}", "{\"gameKills\":0}", "{\"gameGames\":0}");
 ```
 
 This will give you enough to test the API. Tweak the insert command if needed, or add more.

@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
+    "express-rate-limit": "^6.2.0",
     "fecha": "^4.2.1",
     "mojang-api": "^0.0.2",
     "mysql": "^2.18.1",

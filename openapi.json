@@ -1,0 +1,1062 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MCEvents API",
+    "version": "1.0.0",
+    "description": "The official API for the MCEvents Minecraft server.\n\n**NOTE: This API uses your IP for rate limiting.** These are not stored and is handled by the middleware package [express-rate-limit](https://www.npmjs.com/package/express-rate-limit).\n\nThe current rate is 100 requests per 15 minutes. **This may change in the future, as this is an early release.**\n\n[Source code](https://github.com/mcevents/MCEventsAPI)",
+    "license": {
+      "name": "GPL 3.0",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+    },
+    "contact": {
+      "name": "ggtylerr",
+      "url": "https://ggtylerr.dev",
+      "email": "ggtylerr_contact@protonmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Stats",
+      "description": "Routes to get a user's stats."
+    },
+    {
+      "name": "Game stats",
+      "description": "Routes to get a user's game stats."
+    },
+    {
+      "name": "Leaderboard",
+      "description": "Routes to get the top people in the server."
+    }
+  ],
+  "paths": {
+    "/v1/stats/{user}": {
+      "get": {
+        "summary": "Gets the total stats of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "playerXpLevel": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "playerXpAmount": {
+                          "type": "integer",
+                          "example": 9
+                        },
+                        "gameWins": {
+                          "type": "integer",
+                          "example": 69
+                        },
+                        "totalWins": {
+                          "type": "integer",
+                          "example": 69
+                        },
+                        "gameLoses": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "totalLoses": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "gameKills": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "totalKills": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "gameGames": {
+                          "type": "integer",
+                          "example": 5999
+                        },
+                        "totalGames": {
+                          "type": "integer",
+                          "example": 328592
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{user}/xp": {
+      "get": {
+        "summary": "Gets the XP stats of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "playerXpLevel": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "playerXpAmount": {
+                          "type": "integer",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{user}/wins": {
+      "get": {
+        "summary": "Gets the wins of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "game": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{user}/loses": {
+      "get": {
+        "summary": "Gets the loses of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "game": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{user}/kills": {
+      "get": {
+        "summary": "Gets the kills of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "game": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{user}/games": {
+      "get": {
+        "summary": "Gets the games played of said user.",
+        "tags": ["Stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "game": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 9
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No user with the name 'user' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/game/{user}/{game}": {
+      "get": {
+        "summary": "Gets the game stats of said user.",
+        "tags": ["Game stats"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string",
+              "example": "Sourblock"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "game",
+            "schema": {
+              "type": "string",
+              "example": "pvpBrawl"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "loses": {
+                          "type": "integer",
+                          "example": 9
+                        },
+                        "kills": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "games": {
+                          "type": "integer",
+                          "example": 15
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 404
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "No game with the name 'game' was found!"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/lb/wins": {
+      "get": {
+        "summary": "Gets the top winners.",
+        "tags": ["Leaderboard"],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "example": "d2c95f31-40cb-4035-b13c-fc7e00aa8940"
+                              },
+                              "user": {
+                                "type": "string",
+                                "example": "Sourblock"
+                              },
+                              "wins": {
+                                "type": "integer",
+                                "example": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/lb/kills": {
+      "get": {
+        "summary": "Gets the top murderers.",
+        "tags": ["Leaderboard"],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "example": "d2c95f31-40cb-4035-b13c-fc7e00aa8940"
+                              },
+                              "user": {
+                                "type": "string",
+                                "example": "Sourblock"
+                              },
+                              "kills": {
+                                "type": "integer",
+                                "example": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/lb/game/{game}": {
+      "get": {
+        "summary": "Gets the leaderboards for individual games.",
+        "tags": ["Leaderboard"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "game",
+            "schema": {
+              "type": "string",
+              "example": "pvpBrawl"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object",
+                      "properties": {
+                        "wins": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "example": "d2c95f31-40cb-4035-b13c-fc7e00aa8940"
+                              },
+                              "user": {
+                                "type": "string",
+                                "example": "Sourblock"
+                              },
+                              "wins": {
+                                "type": "integer",
+                                "example": 0
+                              }
+                            }
+                          }
+                        },
+                        "kills": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "example": "d2c95f31-40cb-4035-b13c-fc7e00aa8940"
+                              },
+                              "user": {
+                                "type": "string",
+                                "example": "Sourblock"
+                              },
+                              "kills": {
+                                "type": "integer",
+                                "example": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "res": {
+                      "type": "object"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "example": 500
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "DB error."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
